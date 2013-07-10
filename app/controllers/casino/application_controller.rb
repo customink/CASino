@@ -5,6 +5,25 @@ require 'http_accept_language'
 class CASino::ApplicationController < ::ApplicationController
   include ApplicationHelper
 
+###########
+
+helper_method :current_user, :user_signed_in?
+before_filter :authenticate!
+
+def authenticate!
+  processor(:CurrentUser).process(cookies, request.user_agent)
+end
+
+def current_user
+  @current_user
+end
+
+def user_signed_in?
+  !!current_user
+end
+
+###########
+
   layout 'application'
   before_filter :set_locale
 

@@ -4,6 +4,7 @@ module CASino
     # include helpers to have the route path methods (like sessions_path)
     include CASino::Engine.routes.url_helpers
 
+    autoload :CurrentUser, 'casino/listener/current_user.rb'
     autoload :LegacyValidator, 'casino/listener/legacy_validator.rb'
     autoload :LoginCredentialAcceptor, 'casino/listener/login_credential_acceptor.rb'
     autoload :LoginCredentialRequestor, 'casino/listener/login_credential_requestor.rb'

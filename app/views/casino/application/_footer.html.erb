@@ -1,3 +1,13 @@
   <div id="footer">
     <%= CASinoCore::Settings.frontend[:footer_text].html_safe %>
   </div>
+
+<div>
+  <dl>
+    <dt>Signed In?</dt>
+    <dd><%= debug user_signed_in? %></dd>
+
+    <dt>Current User</dt>
+    <dd><%= debug current_user %></dd>
+  </dl>
+</div>

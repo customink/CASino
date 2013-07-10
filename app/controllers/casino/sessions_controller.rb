@@ -1,6 +1,8 @@
 class CASino::SessionsController < CASino::ApplicationController
   include CASino::SessionsHelper
 
+  skip_before_filter :authenticate!, only:[ :new, :create ]
+
   def index
     processor(:TwoFactorAuthenticatorOverview).process(cookies, request.user_agent)
     processor(:SessionOverview).process(cookies, request.user_agent)

@@ -8,5 +8,3 @@ CASinoCore.configure do |cfg|
   cfg.application_root = Rails.root
   cfg.logger = Rails.logger
 end
-
-CASinoCore.setup

@@ -5,3 +5,10 @@
 require File.expand_path('../config/application', __FILE__)
 
 Dummy::Application.load_tasks
+
+task :environment do
+  verbosity = ActiveRecord::Schema.verbose
+  ActiveRecord::Schema.verbose = false
+  load File.join(Rails.root, 'db','schema.rb')
+  ActiveRecord::Schema.verbose = verbosity
+end

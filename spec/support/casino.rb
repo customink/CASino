@@ -1,5 +1,5 @@
 RSpec.configure do |config|
-  config.before(:each, type: :controller) do
-    @routes = CASino::Engine.routes
+  config.around(type: :controller) do
+    self.routes = CASino::Engine.routes
   end
 end

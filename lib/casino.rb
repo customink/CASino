@@ -1,5 +1,6 @@
 require 'active_support/configurable'
 require 'casino_core'
+require 'casino/errors'
 require 'casino/engine'
 
 module CASino

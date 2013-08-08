@@ -12,7 +12,7 @@ development:
   <<: *defaults
   authenticators:
     static:
-      class: "CASinoCore::Authenticator::Static"
+      class: "CASino::Authenticators::Static"
       options:
         users:
           testuser:
@@ -22,7 +22,7 @@ test:
   <<: *defaults
   authenticators:
     static:
-      class: "CASinoCore::Authenticator::Static"
+      class: "CASino::Authenticators::Static"
       options:
         users:
           testuser:

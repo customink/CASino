@@ -49,4 +49,69 @@ describe CASino::ServiceTicket do
       described_class.find_by_ticket('ST-12345').should be_false
     end
   end
+
+  describe '.cleanup_consumed_hard' do
+    before(:each) do
+      CASino::SingleSignOutNotifier.any_instance.stub(:notify).and_return(false)
+    end
+
+    it 'deletes consumed service tickets with an unreachable Single Sign Out callback server' do
+      consumed_ticket.created_at = 10.days.ago
+      consumed_ticket.save!
+      lambda do
+        described_class.cleanup_consumed_hard
+      end.should change(described_class, :count).by(-1)
+    end
+  end
+
+  describe '.cleanup_consumed' do
+    before(:each) do
+      CASino::SingleSignOutNotifier.any_instance.stub(:notify).and_return(true)
+    end
+
+    it 'deletes expired consumed service tickets' do
+      consumed_ticket.created_at = 10.days.ago
+      consumed_ticket.save!
+      lambda do
+        described_class.cleanup_consumed
+      end.should change(described_class, :count).by(-1)
+      described_class.find_by_ticket('ST-12345').should be_false
+    end
+
+    it 'deletes consumed service tickets without ticket_granting_ticket' do
+      consumed_ticket.ticket_granting_ticket_id = nil
+      consumed_ticket.save!
+      lambda do
+        described_class.cleanup_consumed
+      end.should change(described_class, :count).by(-1)
+      described_class.find_by_ticket('ST-12345').should be_false
+    end
+
+    it 'does not delete unexpired service tickets' do
+      consumed_ticket # create the ticket
+      lambda do
+        described_class.cleanup_consumed
+      end.should_not change(described_class, :count)
+    end
+  end
+
+  describe '#destroy' do
+    it 'sends out a single sign out notification' do
+      CASino::SingleSignOutNotifier.any_instance.should_receive(:notify).and_return(true)
+      consumed_ticket.destroy
+    end
+
+    context 'when notification fails' do
+      before(:each) do
+        CASino::SingleSignOutNotifier.any_instance.stub(:notify).and_return(false)
+      end
+
+      it 'does delete the service ticket anyway' do
+        consumed_ticket
+        lambda {
+          consumed_ticket.destroy
+        }.should change(described_class, :count).by(-1)
+      end
+    end
+  end
 end

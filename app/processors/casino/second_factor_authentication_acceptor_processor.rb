@@ -1,3 +1,4 @@
+require 'casino/url_cleaner'
 require_relative 'concerns/service_tickets'
 require_relative 'concerns/ticket_granting_tickets'
 require_relative 'concerns/two_factor_authenticators'
@@ -8,6 +9,7 @@ require_relative 'concerns/two_factor_authenticators'
 # to implement this on the web application side.
 module CASino
   class SecondFactorAuthenticationAcceptorProcessor < AbstractProcessor
+    include CASino::UrlCleaner
     include ProcessorConcerns::ServiceTickets
     include ProcessorConcerns::TicketGrantingTickets
     include ProcessorConcerns::TwoFactorAuthenticators

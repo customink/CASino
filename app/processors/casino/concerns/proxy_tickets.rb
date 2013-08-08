@@ -1,8 +1,10 @@
+require 'casino/url_cleaner'
 require_relative 'ticket_generation'
 
 module CASino
   module ProcessorConcerns
     module ProxyTickets
+      include CASino::UrlCleaner
       include TicketGeneration
 
       class ValidationResult < CASino::ValidationResult; end

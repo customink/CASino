@@ -62,4 +62,57 @@ describe CASino::ServiceRule do
       end
     end
   end
+
+  describe '#unsafe_regex?' do
+    let(:params) { { url:url, regex:true } }
+
+    subject { described_class.new(params).unsafe_regex? }
+
+    context 'with an unsafe Regex-style URL' do
+      let(:url) { '[a-z]' }
+
+      it { should be_true }
+    end
+
+    context 'with an safe Regex-style URL' do
+      let(:url) { '^[a-z]' }
+
+      it { should be_false }
+    end
+  end
+
+  describe '.add' do
+    let(:name) { 'google' }
+    let(:url) { 'http://google.com' }
+
+    subject { described_class.add(name, url) }
+
+    context 'and valid rule parameters' do
+      it 'adds a new rule' do
+        expect{subject}.to change{described_class.count}.by(1)
+      end
+    end
+
+    context 'and invalid rule parameters' do
+      let(:name) { '' }
+
+      it 'raises an error' do
+        expect{subject}.to raise_error ActiveRecord::RecordInvalid
+      end
+    end
+
+    context 'and an unsafe Regex' do
+      let(:url) { 'regex:[a-z]' }
+
+      before do
+        Rails.logger.stub(:warn).and_call_original
+      end
+
+      it 'logs a warning' do
+        subject
+
+        expect(Rails.logger).to have_received(:warn)
+      end
+    end
+  end
 end

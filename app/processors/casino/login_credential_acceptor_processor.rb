@@ -1,3 +1,4 @@
+require 'casino/url_cleaner'
 require_relative 'concerns/authentication'
 require_relative 'concerns/login_tickets'
 require_relative 'concerns/service_tickets'
@@ -6,6 +7,7 @@ require_relative 'concerns/ticket_granting_tickets'
 # This processor should be used for POST requests to /login
 module CASino
   class LoginCredentialAcceptorProcessor < AbstractProcessor
+    include CASino::UrlCleaner
     include ProcessorConcerns::LoginTickets
     include ProcessorConcerns::ServiceTickets
     include ProcessorConcerns::Authentication

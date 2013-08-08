@@ -1,3 +1,4 @@
+require 'casino/url_cleaner'
 require_relative '../concerns/service_tickets'
 require_relative '../concerns/ticket_granting_tickets'
 
@@ -5,6 +6,7 @@ require_relative '../concerns/ticket_granting_tickets'
 module CASino
   module API
     class ServiceTicketProviderProcessor < CASino::AbstractProcessor
+      include CASino::UrlCleaner
       include CASino::ProcessorConcerns::ServiceTickets
       include CASino::ProcessorConcerns::TicketGrantingTickets
 

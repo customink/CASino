@@ -1,6 +1,22 @@
-module Casino # CASino would lead to c_a_sino...
+module CASino
   class InstallGenerator < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
+
+    # Explicit namespace needed for proper inflection.
+    # Thor::Group does not use ActiveSupport's Inflector when programmatically
+    # generating the namespace, so this would be to "c_a_sino" otherwise.
+    namespace 'casino:install'
+
+    class_option :migration,
+        desc:'Skip generating migrations',
+        type: :boolean,
+        default: true
+
+    def install_migrations
+      return unless options['migration']
+
+      rake 'casino:install:migrations'
+    end
 
     def copy_config_files
       copy_file 'cas.yml', 'config/cas.yml'
@@ -14,11 +30,7 @@ module Casino # CASino would lead to c_a_sino...
     end
 
     def insert_engine_routes
-      route "mount CASino::Engine => '/', :as => 'CASino'"
-    end
-
-    def remove_index_html
-      remove_file 'public/index.html'
+      route "mount CASino::Engine => '/', :as => 'casino'"
     end
 
     def show_readme

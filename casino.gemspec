@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://rbcas.org/'
   s.license     = 'MIT'
   s.summary     = 'A simple CAS server written in Ruby using the Rails framework.'
-  s.description = 'CASino is a simple CAS (Central Authentication Service) server using CASinoCore as its backend.'
+  s.description = 'CASino is a simple CAS (Central Authentication Service)'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -34,5 +34,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rails', '~> 3.2.9'
   s.add_runtime_dependency 'jquery-rails', '~> 2.1'
   s.add_runtime_dependency 'http_accept_language', '~> 2.0.0.pre'
-  s.add_runtime_dependency 'casino_core', '~> 1.4.0'
+  s.add_runtime_dependency 'addressable', '~> 2.3'
+  s.add_runtime_dependency 'terminal-table', '~> 1.4'
+  s.add_runtime_dependency 'useragent', '~> 0.4'
+  s.add_runtime_dependency 'faraday', '~> 0.8'
+  s.add_runtime_dependency 'rotp', '~> 1.4'
 end

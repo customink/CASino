@@ -1,11 +1,6 @@
 require 'active_support/configurable'
-require 'casino_core'
 require 'casino/errors'
 require 'casino/engine'
-
-# Temporary until CASinoCore is deprecated (required for tests to pass)
-require_relative '../app/authenticators/abstract_authenticator'
-require_relative '../app/authenticators/static'
 
 module CASino
   include ActiveSupport::Configurable

@@ -1,4 +1,3 @@
-require 'casino'
 require 'casino/inflections'
 
 module CASino

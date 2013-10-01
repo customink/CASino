@@ -1,5 +1,5 @@
 # This processor should be used for API calls: POST /cas/v1/tickets
-class CASino::API::LoginCredentialAcceptorProcessor < CASino::Processor
+class CASino::Api::LoginCredentialAcceptorProcessor < CASino::Processor
   include CASino::Concerns::Processors::ServiceTickets
   include CASino::Concerns::Processors::Authentication
   include CASino::Concerns::Processors::TicketGrantingTickets

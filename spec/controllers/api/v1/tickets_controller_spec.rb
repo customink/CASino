@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe CASino::API::V1::TicketsController do
+describe CASino::Api::V1::TicketsController do
 
   describe "POST /cas/v1/tickets" do
     context "with correct credentials" do
 
       before do
-        CASino::API::LoginCredentialAcceptorProcessor.any_instance.should_receive(:process) do
+        CASino::Api::LoginCredentialAcceptorProcessor.any_instance.should_receive(:process) do
           @controller.user_logged_in_via_api "TGT-long-string"
         end
 
@@ -21,7 +21,7 @@ describe CASino::API::V1::TicketsController do
     context "with incorrect credentials" do
 
       before do
-        CASino::API::LoginCredentialAcceptorProcessor.any_instance.should_receive(:process) do
+        CASino::Api::LoginCredentialAcceptorProcessor.any_instance.should_receive(:process) do
           @controller.invalid_login_credentials_via_api
         end
 
@@ -35,7 +35,7 @@ describe CASino::API::V1::TicketsController do
     context "with a not allowed service" do
 
       before do
-        CASino::API::LoginCredentialAcceptorProcessor.any_instance.should_receive(:process) do
+        CASino::Api::LoginCredentialAcceptorProcessor.any_instance.should_receive(:process) do
           @controller.service_not_allowed_via_api
         end
 
@@ -52,7 +52,7 @@ describe CASino::API::V1::TicketsController do
     context "with a valid TGT" do
 
       before do
-        CASino::API::ServiceTicketProviderProcessor.any_instance.should_receive(:process).with('TGT-valid', kind_of(Hash), request.user_agent) do |ticket, params|
+        CASino::Api::ServiceTicketProviderProcessor.any_instance.should_receive(:process).with('TGT-valid', kind_of(Hash), request.user_agent) do |ticket, params|
           params.should == controller.params
           @controller.granted_service_ticket_via_api 'ST-1-VALIDSERVICETICKET'
         end
@@ -68,7 +68,7 @@ describe CASino::API::V1::TicketsController do
     context "with an invalid TGT" do
 
       before do
-        CASino::API::ServiceTicketProviderProcessor.any_instance.should_receive(:process).with('TGT-invalid', kind_of(Hash), request.user_agent) do |ticket, params|
+        CASino::Api::ServiceTicketProviderProcessor.any_instance.should_receive(:process).with('TGT-invalid', kind_of(Hash), request.user_agent) do |ticket, params|
           params.should == controller.params
           @controller.invalid_ticket_granting_ticket_via_api
         end
@@ -84,7 +84,7 @@ describe CASino::API::V1::TicketsController do
     context "without a service" do
 
       before do
-        CASino::API::ServiceTicketProviderProcessor.any_instance.should_receive(:process).with('TGT-valid', kind_of(Hash), request.user_agent) do |ticket, params|
+        CASino::Api::ServiceTicketProviderProcessor.any_instance.should_receive(:process).with('TGT-valid', kind_of(Hash), request.user_agent) do |ticket, params|
           params.should == controller.params
           @controller.no_service_provided_via_api
         end
@@ -100,7 +100,7 @@ describe CASino::API::V1::TicketsController do
 
   describe "DELETE /cas/v1/tickets/TGT-fdsjfsdfjkalfewrihfdhfaie" do
      before do
-      CASino::API::LogoutProcessor.any_instance.should_receive(:process).with('TGT-fdsjfsdfjkalfewrihfdhfaie', request.user_agent) do
+      CASino::Api::LogoutProcessor.any_instance.should_receive(:process).with('TGT-fdsjfsdfjkalfewrihfdhfaie', request.user_agent) do
         @controller.user_logged_out_via_api
       end
       post :destroy, id: 'TGT-fdsjfsdfjkalfewrihfdhfaie', use_route: :casino

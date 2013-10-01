@@ -1,5 +1,5 @@
 # The ServiceTicketProvider processor should be used to handle API calls: POST requests to /cas/v1/tickets/<ticket_granting_ticket>
-class CASino::API::ServiceTicketProviderProcessor < CASino::Processor
+class CASino::Api::ServiceTicketProviderProcessor < CASino::Processor
   include CASino::Concerns::Processors::ServiceTickets
   include CASino::Concerns::Processors::TicketGrantingTickets
 

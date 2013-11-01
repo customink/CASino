@@ -13,7 +13,7 @@ class CASino::LogoutProcessor < CASino::Processor
   def process(params = nil, user = nil, user_agent = nil)
     params ||= {}
     user ||= current_user
-    user.ticket(user_agent:user_agent).destroy
+    user.ticket(user_agent:user_agent).try(:destroy)
     if params[:service] && CASino::ServiceRule.allowed?(params[:service])
       @listener.user_logged_out(params[:service], true)
     else

@@ -36,6 +36,9 @@ class CASino::ServiceTicket < ActiveRecord::Base
 
   private
   def send_single_sing_out_notification
+    # ignore unset service urls
+    return true if self.service =~ /\/localhost/
+
     notifier = SingleSignOutNotifier.new(self)
     notifier.notify
     true
